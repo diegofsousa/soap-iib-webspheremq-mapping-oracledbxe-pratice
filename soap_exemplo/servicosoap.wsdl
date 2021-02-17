@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="servicosoap" targetNamespace="http://www.middleware4you.com/servicosoap/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.middleware4you.com/servicosoap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://middleware4you.com.br/entidades/Pessoa/v1">
+  <wsdl:documentation>
+    <wsdl:appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <generatedXSD location="servicosoap_InlineSchema1.xsd"/>
+        <binding hasEncoding="false" imported="true" name="servicosoapSOAP" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </wsdl:appinfo>
+  </wsdl:documentation>
+  <wsdl:types>
+    
+    <xsd:schema targetNamespace="http://www.middleware4you.com/servicosoap/" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions">
+		<xsd:include schemaLocation="servicosoap_InlineSchema1.xsd"/>
+    </xsd:schema>
+          <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+          	<xsd:import
+          		namespace="http://middleware4you.com.br/entidades/Pessoa/v1"
+          		schemaLocation="Pessoa_v1.xsd">
+          	</xsd:import></xsd:schema></wsdl:types>
+    
+  <wsdl:message name="EnviaPessoaFisicaOperationRequest">
+    <wsdl:part element="xsd1:EnviaPessoaFisicaRequisicao"
+    	name="parameters" />
+  </wsdl:message>
+  
+  <wsdl:message name="ConsultaPessoaFisicaRequest">
+    <wsdl:part element="xsd1:ConsultaPessoaRequisicao"
+    	name="parameters" />
+  </wsdl:message>
+  
+  <wsdl:message name="ConsultaPessoaFisicaResponse">
+    <wsdl:part element="xsd1:ConsultaPessoaResposta"
+    	name="parameters" />
+  </wsdl:message>
+  
+  <wsdl:portType name="servicosoap">
+    <wsdl:operation name="EnviaPessoaFisicaOperation">
+      <wsdl:input message="tns:EnviaPessoaFisicaOperationRequest"/>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaPessoaOperation">
+      <wsdl:input message="tns:ConsultaPessoaFisicaRequest"/>
+      <wsdl:output message="tns:ConsultaPessoaFisicaResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <wsdl:binding name="servicosoapSOAP" type="tns:servicosoap">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="EnviaPessoaFisicaOperation">
+      <soap:operation soapAction="http://www.middleware4you.com/servicosoap/EnviaPessoaFisicaOperation"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaPessoaOperation">
+      <soap:operation soapAction="http://www.middleware4you.com/servicosoap/ConsultaPessoaOperation"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="servicosoap">
+    <wsdl:port binding="tns:servicosoapSOAP" name="servicosoapSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+  
+</wsdl:definitions>

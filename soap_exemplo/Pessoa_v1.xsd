@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://middleware4you.com.br/entidades/Pessoa/v1" version="1.0" xmlns:com="http://middleware4you.com.br/entidades/Comum/v1" xmlns:cre="http://middleware4you.com.br/entidades/Credencial/v1" xmlns:end="http://middleware4you.com.br/entidades/Endereco/v1" xmlns:tns="http://middleware4you.com.br/entidades/Pessoa/v1">
+
+  <xsd:annotation>
+		<xsd:documentation>Este schema/dominio tem as entidades que representam uma pessoa, pessoa fisica e/ou juridica.</xsd:documentation>
+	</xsd:annotation>
+
+ 
+  <xsd:import namespace="http://middleware4you.com.br/entidades/Endereco/v1" schemaLocation="Endereco_v1.xsd"/>
+
+
+
+<xsd:element name="EnviaPessoaFisicaRequisicao">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="1" minOccurs="1" name="pessoa" type="tns:PessoaFisica">
+					<xsd:annotation>
+						<xsd:documentation>Sistema que esta efetuando a requisicao</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="ConsultaPessoaRequisicao">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="1" minOccurs="1" name="nomePessoa" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>Sistema que esta efetuando a requisicao</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="ConsultaPessoaResposta">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element maxOccurs="unbounded" minOccurs="0" name="pessoa" type="tns:PessoaFisica">
+					<xsd:annotation>
+						<xsd:documentation>Sistema que esta efetuando a requisicao</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+
+	<xsd:simpleType name="TipoContatoPessoa">
+		<xsd:annotation>
+			<xsd:documentation>Representa uma forma de contato com a pessoa.
+				Telefones sempre sao representados por dois digitos do DDD e o resto
+				do telefone.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="TELEFONE_CELULAR">
+				<xsd:annotation>
+					<xsd:documentation>Telefone celular</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="TELEFONE_RESIDENCIAL">
+				<xsd:annotation>
+					<xsd:documentation>Telefone residencial</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="TELEFONE_TRABALHO">
+				<xsd:annotation>
+					<xsd:documentation>Telefone trabalho</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="TELEFONE">
+				<xsd:annotation>
+					<xsd:documentation>Telefone</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="EMAIL_TRABALHO">
+				<xsd:annotation>
+					<xsd:documentation>Email do trabalho</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="EMAIL">
+				<xsd:annotation>
+					<xsd:documentation>Email</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="FAX">
+				<xsd:annotation>
+					<xsd:documentation>Fax</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+  
+	<xsd:simpleType name="EstadoCivil">
+		<xsd:annotation>
+			<xsd:documentation>Representa um estado civil de uma pessoa.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+  
+	<xsd:simpleType name="TipoEnderecoPessoaJuridica">
+		<xsd:annotation>
+			<xsd:documentation>Representa um tipo de endereco de pessoa juridica.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+
+  <xsd:complexType name="ContatoPessoa">
+    <xsd:annotation>
+      <xsd:documentation>Entidade que presenta um contato de uma pessoa</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="valor" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Valor do tipo de contato, sem formatacao. Ex: Numero de telefone, email</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="tipoContato" type="tns:TipoContatoPessoa">
+        <xsd:annotation>
+          <xsd:documentation>Tipo do contato conforme enum</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+	<xsd:complexType name="ContatoTelefonico">
+		<xsd:annotation>
+			<xsd:documentation>Entidade que representa um contato telefonico de uma pessoa.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="tns:ContatoPessoa">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="codigoArea" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>Codigo de area de um numero telefonico.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="codigoPais" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>Codigo de pais de um numero telefonico.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="numero" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>Numero telefonico.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="extensao" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>Extensao de um numero telefonico.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+  
+	<xsd:complexType name="ListaContatoPessoa">
+		<xsd:annotation>
+			<xsd:documentation>Wrapper para a listagem de contatos de uma pessoa</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="contato" type="tns:ContatoPessoa"/>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="contatoTelefonico" type="tns:ContatoTelefonico"/>
+		</xsd:sequence>
+	</xsd:complexType>
+  
+  <xsd:simpleType name="TipoDocumentoPessoa">
+    <xsd:annotation>
+      <xsd:documentation>Representa os documentos oficial que uma pessoa pode ter</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="CPF">
+      	<xsd:annotation>
+      		<xsd:documentation>Identificador da pessoa física junto a receita feita e orgaos competentes</xsd:documentation>
+      	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="RG">
+      	<xsd:annotation>
+      		<xsd:documentation>Registro geral de uma pessoa física no estado onde foi criado</xsd:documentation>
+      	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="CNH">
+      	<xsd:annotation>
+      		<xsd:documentation>Codigo identificador da carteira de motorista de uma pessoa</xsd:documentation>
+      	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="CNPJ">
+      	<xsd:annotation>
+      		<xsd:documentation>Identificador da empresa na receita federal e orgaos competentes</xsd:documentation>
+      	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="IE">
+      	<xsd:annotation>
+      		<xsd:documentation>Inscricao estadual de uma pessoa jurídica</xsd:documentation>
+      	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="IM">
+      	<xsd:annotation>
+      		<xsd:documentation>Inscricao municipal de uma pessoa jurídica</xsd:documentation>
+      	</xsd:annotation>
+      </xsd:enumeration>
+       <xsd:enumeration value="PIS_PASEP">
+      	<xsd:annotation>
+      		<xsd:documentation>programa de integração social para trabalhadores CLT 
+      		e programa social dos trabalhores do servidor público</xsd:documentation>
+      	</xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:complexType name="DocumentoPessoa">
+    <xsd:annotation>
+      <xsd:documentation>Entidade que representa o documento de uma pessoa</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="valor" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Valor do documento de uma pessoa, sem formatacao.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="tipoDocumento" type="tns:TipoDocumentoPessoa">
+        <xsd:annotation>
+          <xsd:documentation>Tipo de documento conforme enum</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+			<xsd:element minOccurs="0" name="orgaoExpedidor" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Orgao expedidor do documento.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+  
+  <xsd:complexType name="ListaDocumentoPessoa">
+    <xsd:annotation>
+      <xsd:documentation>Wrapper para a listagem de documentos de uma pessoa</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="documento" type="tns:DocumentoPessoa"/>
+		</xsd:sequence>
+	</xsd:complexType>
+  
+	<xsd:complexType name="Curso">
+		<xsd:annotation>
+			<xsd:documentation>Entidade que representa um curso que foi realizado por uma pessoa</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="nome" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Nome do curso.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+  
+	<xsd:complexType name="ListaCurso">
+		<xsd:annotation>
+			<xsd:documentation>Lista da entidade canonica Curso.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="curso" type="tns:Curso"/>
+		</xsd:sequence>
+	</xsd:complexType>
+  
+	<xsd:complexType name="EnderecoPessoaJuridica">
+		<xsd:annotation>
+			<xsd:documentation>Endereco principal da franquia (local no qual a franquia esta localizada fisicamente)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="end:Endereco">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="tipo" type="tns:TipoEnderecoPessoaJuridica">
+						<xsd:annotation>
+							<xsd:documentation>Tipo do endereco de uma pessoa juridica.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+  
+	<xsd:complexType name="ListaEnderecoPessoaJuridica">
+		<xsd:annotation>
+			<xsd:documentation>Lista da entidade canonica EnderecoPessoaJuridica. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="enderecoPessoaJuridica" type="tns:EnderecoPessoaJuridica"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+  <xsd:complexType name="Pessoa">
+		<xsd:annotation>
+			<xsd:documentation>Entidade que representa uma pessoa.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+      <xsd:element minOccurs="0" name="contatos" type="tns:ListaContatoPessoa"/>
+      <xsd:element minOccurs="0" name="documentos" type="tns:ListaDocumentoPessoa"/>
+      <xsd:element minOccurs="0" name="dadosBancarios" type="tns:ListaDadoBancario"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PessoaFisica">
+		<xsd:annotation>
+			<xsd:documentation>Entidade que representa uma pessoa fisica com seus atributos especificos.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="tns:Pessoa">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="nome" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>Nome da pessoa</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="sobrenome" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>Sobrenome da pessoa</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="dataNascimento" type="xsd:date">
+						<xsd:annotation>
+							<xsd:documentation>Data de nascimento da pessoa</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="sexo" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>Sexo da pessoa</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="estadoCivil" type="tns:EstadoCivil">
+						<xsd:annotation>
+							<xsd:documentation>Estado civil de um pessoa.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="grauDeInstrucao" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>Grau de instrucao de uma pessoa.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="conjuge" type="tns:PessoaFisica"/>
+					<xsd:element minOccurs="0" name="cursos" type="tns:ListaCurso"/>
+					<xsd:element minOccurs="0" name="nomePreferencia" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>Apelido, nickname, nome de preferencia da pessoa
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+  
+	<xsd:complexType name="PessoaJuridica">
+		<xsd:annotation>
+			<xsd:documentation>Entidade que representa uma pessoa juridica.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="tns:Pessoa">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="listaEnderecoPessoaJuridica" type="tns:ListaEnderecoPessoaJuridica"/>
+					<xsd:element minOccurs="0" name="razaoSocial" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>Nome da empresa cadastrado no documento de contrato</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="nomeFantasia" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>Tambem conhecido como nome de fachada ou marca empresarial,´
+							e o nome popular de uma pessoa juridica, e pode ou nao ser igual a razao social.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="regimeTributario" type="tns:RegimeTributario">
+						<xsd:annotation>
+							<xsd:documentation>Regime a qual a empresa paga ao governo</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ListaDadoBancario">
+		<xsd:annotation>
+			<xsd:documentation>Lista de entidade canonica DadoBancario</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="dadoBancario" type="tns:DadoBancario">
+				<xsd:annotation>
+					<xsd:documentation>Wrapper para listagem de dados bancarios de uma pessoa</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="DadoBancario">
+		<xsd:annotation>
+			<xsd:documentation>Informacoes de contas de bancos brasileiros de uma pessoa</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="tipo" type="tns:TipoDadoBancario">
+				<xsd:annotation>
+					<xsd:documentation>Qual a relacao da conta bancaria com a pessoa</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="codigo" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Codigo identificador do dado bancario para cada tipo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="banco" type="tns:Banco">
+				<xsd:annotation>
+					<xsd:documentation>Codigo BACEN do Banco</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="agencia" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Numero da Agencia</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="conta" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Conta Bancaria</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="TipoDadoBancario">
+		<xsd:annotation>
+			<xsd:documentation>Tipo da conta que pertence uma pessoa</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="REEMBOLSO_FUNCIONARIO">
+				<xsd:annotation>
+					<xsd:documentation>Dados Bancarios para reembolso de valores para funcionario corporativo</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="Banco">
+		<xsd:annotation>
+			<xsd:documentation>Elemento que define a regra da quantidade caracteres do banco</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="0"/>
+			<xsd:maxLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="RegimeTributario">
+    <xsd:annotation>
+      <xsd:documentation>RegimeTributario(indica como os tributos são pagos para o governo)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="SIMPLES_NACIONAL">
+      	<xsd:annotation>
+      		<xsd:documentation>Regime compartilhado de arrecadação, cobrança e fiscalização de tributos 
+      		aplicável às Microempresas e Empresas de Pequeno Porte</xsd:documentation>
+      	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="LUCRO_PRESUMIDO">
+      	<xsd:annotation>
+      		<xsd:documentation>forma de tributação simplificada do Imposto de Renda das Pessoas Jurídicas (IRPJ) e 
+      		Contribuição Social sobre o Lucro (CSLL)</xsd:documentation>
+      	</xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="LUCRO_REAL">
+      	<xsd:annotation>
+      		<xsd:documentation>regra geral para a apuração do Imposto de Renda e da Contribuição Social sobre o 
+      		Lucro Líquido (CSLL) da pessoa jurídica</xsd:documentation>
+      	</xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

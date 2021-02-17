@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmMQOutput.msgnode="ComIbmMQOutput.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:util_removeSOAPMSG_sub.subflow="util_removeSOAPMSG_sub.subflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="EnviaPessoaFisica_sub.subflow" nsPrefix="EnviaPessoaFisica_sub.subflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <translation xmi:type="utility:TranslatableString" key="EnviaPessoaFisica_sub" bundleName="EnviaPessoaFisica_sub" pluginId="soap_exemplo"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/soap_exemplo/icons/full/obj16/EnviaPessoaFisica_sub.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/soap_exemplo/icons/full/obj30/EnviaPessoaFisica_sub.gif"/>
+    <composition>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="20,20">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="EnviaPessoaFisica_sub" pluginId="soap_exemplo"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="479,39" queueName="aula.soap.in">
+        <translation xmi:type="utility:ConstantString" string="Postar_MSG_FILA"/>
+      </nodes>
+      <nodes xmi:type="util_removeSOAPMSG_sub.subflow:FCMComposite_1" xmi:id="FCMComposite_1_6" location="210,51">
+        <translation xmi:type="utility:ConstantString" string="util_removeSOAPMSG_sub"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="FCMComposite_1_6" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer/>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

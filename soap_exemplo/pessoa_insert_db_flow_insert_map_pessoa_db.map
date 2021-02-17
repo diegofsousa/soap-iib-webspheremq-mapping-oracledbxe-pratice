@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="default" version="8.0.5.0" xmlns:map="default">
+    <input path="/Pessoa_v1.xsd" var="var"/>
+    <input path="jar:file://!com/ibm/msl/mapping/rdb/xsds/dbreturn.xsd" var="var1"/>
+    <output path="db:table(/xe.dbm,xe,MIDDLEWARE4YOU,PESSOA)" var="PESSOA"/>
+    <namespaces>
+        <namespace kind="supplement" prefix="in" uri="http://middleware4you.com.br/entidades/Pessoa/v1"/>
+        <namespace kind="supplement" prefix="in2" uri="http://middleware4you.com.br/entidades/Endereco/v1"/>
+    </namespaces>
+    <generation engine="xquery"/>
+    <mappingDeclaration name="pessoa_insert_db_flow_insert_map_pessoa_db">
+        <input namespace="http://middleware4you.com.br/entidades/Pessoa/v1" path="$var/mb:msg(EnviaPessoaFisicaRequisicao,assembly,XMLNSC,Properties)"/>
+        <output path="$PESSOA/db:insert(fn:true(),NOME,SOBRENOME,ESTADOCIVIL,SEXO,EMAIL)" var="dbinsert"/>
+        <transaction>
+            <insert ref="dbinsert">
+                <input path="EnviaPessoaFisicaRequisicao/pessoa"/>
+                <output path="$dbinsert/."/>
+                <move>
+                    <input path="nome"/>
+                    <output path="NOME"/>
+                </move>
+                <move>
+                    <input path="sobrenome"/>
+                    <output path="SOBRENOME"/>
+                </move>
+                <move>
+                    <input path="estadoCivil"/>
+                    <output path="ESTADOCIVIL"/>
+                </move>
+                <move>
+                    <input path="sexo"/>
+                    <output path="SEXO"/>
+                </move>
+                <move>
+                    <input path="contatos/contato[1]/valor"/>
+                    <output path="EMAIL"/>
+                </move>
+            </insert>
+            <return>
+                <input path="$var1/DBInsertReturn"/>
+            </return>
+        </transaction>
+    </mappingDeclaration>
+</mappingRoot>

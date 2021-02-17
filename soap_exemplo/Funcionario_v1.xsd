@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://middleware4you.com.br/entidades/Funcionario/v1" xmlns:cred="http://middleware4you.com.br/entidades/Credencial/v1" xmlns:emp="http://middleware4you.com.br/entidades/Empresa/v1" xmlns:end="http://middleware4you.com.br/entidades/Endereco/v1" xmlns:func="http://middleware4you.com.br/entidades/Funcionario/v1" xmlns:pess="http://middleware4you.com.br/entidades/Pessoa/v1">
+	
+	<xsd:import namespace="http://middleware4you.com.br/entidades/Pessoa/v1" schemaLocation="Pessoa_v1.xsd"/>
+	
+	<xsd:import namespace="http://middleware4you.com.br/entidades/Endereco/v1" schemaLocation="Endereco_v1.xsd"/>	
+
+	
+	<xsd:complexType name="Funcionario">
+		<xsd:annotation>
+			<xsd:documentation>Representa um funcionario generico</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="pess:PessoaFisica">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="dataAdmissao" type="xsd:date">
+						<xsd:annotation>
+							<xsd:documentation>Data de Admissao do Funcionario
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="dataDemissao" type="xsd:date">
+						<xsd:annotation>
+							<xsd:documentation>Data de Demissao do funcionario, quando existir
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="dataAtualizacao" type="xsd:date">
+						<xsd:annotation>
+							<xsd:documentation>Data de Atualizacao dos dados do funcionario</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="matricula" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>Matricula do funcionario</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element minOccurs="0" name="status" type="func:StatusFuncionario"/>
+					
+					<xsd:element minOccurs="0" name="endereco" type="func:EnderecoFuncionario">
+						<xsd:annotation>
+							<xsd:documentation>Endereco do funcionario</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="CargoCorporativo">
+		<xsd:annotation>
+			<xsd:documentation>Define o cargo que um funcionario pode ter</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="codigo" type="xsd:int">
+				<xsd:annotation>
+					<xsd:documentation>Codigo do cargo de franquia do funcionario
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="descricao" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Descricao do cargo de franquia do funcionario
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="StatusFuncionario">
+		<xsd:annotation>
+			<xsd:documentation>Representa o status de um funcionario.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ATIVO">
+				<xsd:annotation>
+          <xsd:documentation>Indica que o funcionario esta ativo e trabalhando</xsd:documentation>
+        </xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="INATIVO">
+				<xsd:annotation>
+          <xsd:documentation>Indica que o funcionario esta inativo e nao esta trabalhando</xsd:documentation>
+        </xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="FuncionarioCorporativo">
+		<xsd:annotation>
+			<xsd:documentation>Entidade que representa um funcionario do Grupo Boticario.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="func:Funcionario">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="cargoCorporativo" type="func:CargoCorporativo"/>
+					<xsd:element minOccurs="0" name="departamento" type="func:Departamento"/>
+					<xsd:element minOccurs="0" name="empresa" type="xsd:string"/>
+					<xsd:element minOccurs="0" name="gestor" type="func:FuncionarioCorporativo">
+						<xsd:annotation>
+							<xsd:documentation>Superior Imediato do Funcionario</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="0" name="centroDeCusto" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ListaFuncionarioCorporativo">
+		<xsd:annotation>
+			<xsd:documentation>Lista da entidade canonica FuncionarioCorporativo.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="funcionario" type="func:FuncionarioCorporativo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="FuncionarioTerceiro">
+		<xsd:annotation>
+			<xsd:documentation>Funcionario de outra pessoa juridica que nao pertence as empresas do grupo boticario</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="func:Funcionario"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="EnderecoFuncionario">
+		<xsd:annotation>
+			<xsd:documentation>Representa o endereco do funcionario</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="end:Endereco"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="Departamento">
+		<xsd:annotation>
+			<xsd:documentation>Coordenacao do funcionario, eh o nivel mais baixo da estrutura organizacional</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="codigo" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Codigo do Departamento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="nome" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Nome do Departamento</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

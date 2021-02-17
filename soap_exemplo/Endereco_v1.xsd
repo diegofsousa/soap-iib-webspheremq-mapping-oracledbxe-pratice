@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://middleware4you.com.br/entidades/Endereco/v1" version="1.0" xmlns:com="http://middleware4you.com.br/entidades/Comum/v1" xmlns:tns="http://middleware4you.com.br/entidades/Endereco/v1">
+
+    <xsd:annotation>
+    	<xsd:documentation>Este schema/dominio agrupa os objetos que sao referentes ao endereco. </xsd:documentation>
+    </xsd:annotation>
+   
+    <xsd:simpleType name="EnderecoLado">
+        <xsd:annotation>
+        	<xsd:documentation>Representa o lado do numero que o endereco esta localizado</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PAR">
+				<xsd:annotation>
+          <xsd:documentation>Lado PAR</xsd:documentation>
+        </xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="IMPAR">
+				<xsd:annotation>
+          <xsd:documentation>Lado IMPAR</xsd:documentation>
+        </xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="ListaEndereco">
+       	<xsd:annotation>
+       		<xsd:documentation>Wrapper para listagem de endereco</xsd:documentation>
+       	</xsd:annotation>	
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="endereco" type="tns:Endereco"/>
+		</xsd:sequence>
+	</xsd:complexType>
+		
+	<xsd:complexType name="Endereco">
+        <xsd:annotation>
+        	<xsd:documentation>Representacao de um endereco</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="logradouro" type="xsd:string">
+            	<xsd:annotation>
+            		<xsd:documentation>Logradouro do endereco, retorna junto o tipo do logradouro, ex: Av. ABC</xsd:documentation>
+            	</xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="numero" type="xsd:string">
+            	<xsd:annotation>
+            		<xsd:documentation>Numero do Endereco</xsd:documentation>
+            	</xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="cep" type="xsd:string">
+            	<xsd:annotation>
+            		<xsd:documentation>CEP do endereco</xsd:documentation>
+            	</xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="bairro" type="xsd:string">
+            	<xsd:annotation>
+            		<xsd:documentation>Bairro ao qual o endereco pertence</xsd:documentation>
+            	</xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="numeroFinal" type="xsd:string">
+            	<xsd:annotation>
+            		<xsd:documentation>numero maximo do logradouro</xsd:documentation>
+            	</xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="lado" type="tns:EnderecoLado">
+            	<xsd:annotation>
+            		<xsd:documentation>Qual o lado da rua para aquele numero</xsd:documentation>
+            	</xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="complemento" type="xsd:string">
+            	<xsd:annotation>
+            		<xsd:documentation>Representa as informacoes complementares do endereco em questao.</xsd:documentation>
+            	</xsd:annotation>
+            </xsd:element>            
+            <xsd:element minOccurs="0" name="cidade" type="tns:Cidade">
+            	<xsd:annotation>
+            		<xsd:documentation>Cidade aonde o endereco esta localizado</xsd:documentation>
+            	</xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="referencia" type="xsd:string">
+            	<xsd:annotation>
+            		<xsd:documentation>Ponto de referencia do endereco em questao</xsd:documentation>
+            	</xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ListaCidade">
+      	<xsd:annotation>
+      		<xsd:documentation>Wrapper para listagem de cidades</xsd:documentation>
+      	</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="cidade" type="tns:Cidade"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:complexType name="Cidade">
+        <xsd:annotation>
+        	<xsd:documentation>Representa uma cidade</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+			<xsd:element minOccurs="0" name="nome" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Nome da cidade</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="estado" type="tns:Estado">
+				<xsd:annotation>
+					<xsd:documentation>Estado ao qual a cidade pertence</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ListaEstado">
+       	<xsd:annotation>
+       		<xsd:documentation>Wrapper para a listagem de estados</xsd:documentation>
+       	</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="estado" type="tns:Estado"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:complexType name="Estado">
+        <xsd:annotation>
+        	<xsd:documentation>Representa um estado</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+			<xsd:element minOccurs="0" name="nome" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Nome do estado</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="abreviacao" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Abreviacao do estado</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="pais" type="tns:Pais">
+            	<xsd:annotation>
+            		<xsd:documentation>Pais ao qual este estado pertence</xsd:documentation>
+            	</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="regiaoGeografica" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Nome da regiao geografica do estado</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:complexType name="Pais">
+      	<xsd:annotation>
+      		<xsd:documentation>Entidade que representa um pais</xsd:documentation>
+      	</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="abreviacao" type="xsd:string">
+            	<xsd:annotation>
+            		<xsd:documentation>Abreviacao do nome do pais</xsd:documentation>
+            	</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="nome" type="xsd:string">
+            	<xsd:annotation>
+            		<xsd:documentation>Nome do pais</xsd:documentation>
+            	</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+		<xsd:complexType name="CoordenadaGeografica">
+      	<xsd:annotation>
+      		<xsd:documentation>Entidade que representa um ponto geografico no globo terrestre</xsd:documentation>
+      	</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="latitude" type="xsd:string">
+            	<xsd:annotation>
+            		<xsd:documentation>Eixo X</xsd:documentation>
+            	</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="longitude" type="xsd:string">
+            	<xsd:annotation>
+            		<xsd:documentation>Eixo Y</xsd:documentation>
+            	</xsd:annotation>
+			</xsd:element>
+		
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

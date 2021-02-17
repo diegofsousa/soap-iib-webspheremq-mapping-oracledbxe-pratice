@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xtools2_universal_type_manager-->
+<xmi:XMI xmlns:datamodelversion="http://www.ibm.com/com.ibm.datatools.core/model/data/1.9.0.0" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:OracleModel="http:///com/ibm/db/models/oracle/oracle.ecore" xmlns:SQLDataTypes="http:///org/eclipse/datatools/modelbase/sql/datatypes.ecore" xmlns:SQLSchema="http:///org/eclipse/datatools/modelbase/sql/schema.ecore">
+  <OracleModel:OracleDatabase xmi:id="_aEYy4HCzEeuEFKGMU-6Pdw" name="xe" vendor="Oracle" version="11" schemas="_aE6-YHCzEeuEFKGMU-6Pdw">
+    <eAnnotations xmi:id="_aEYy4XCzEeuEFKGMU-6Pdw" source="ConnectionURI">
+      <details xmi:id="_aEYy4nCzEeuEFKGMU-6Pdw" key="ConnectionKey" value="xe"/>
+    </eAnnotations>
+  </OracleModel:OracleDatabase>
+  <SQLSchema:Schema xmi:id="_aE6-YHCzEeuEFKGMU-6Pdw" name="MIDDLEWARE4YOU" tables="_aE6-YXCzEeuEFKGMU-6Pdw" database="_aEYy4HCzEeuEFKGMU-6Pdw"/>
+  <OracleModel:OracleTable xmi:id="_aE6-YXCzEeuEFKGMU-6Pdw" name="PESSOA" schema="_aE6-YHCzEeuEFKGMU-6Pdw" PCTFree="10" initTrans="1" maxTrans="255">
+    <columns xmi:id="_aE7lcHCzEeuEFKGMU-6Pdw" name="NOME" nullable="false">
+      <containedType xsi:type="SQLDataTypes:CharacterStringDataType" xmi:id="_aE7lcXCzEeuEFKGMU-6Pdw" name="VARCHAR2" primitiveType="CHARACTER_VARYING" length="50"/>
+    </columns>
+    <columns xmi:id="_aE7lcnCzEeuEFKGMU-6Pdw" name="SOBRENOME" nullable="false">
+      <containedType xsi:type="SQLDataTypes:CharacterStringDataType" xmi:id="_aE7lc3CzEeuEFKGMU-6Pdw" name="VARCHAR2" primitiveType="CHARACTER_VARYING" length="50"/>
+    </columns>
+    <columns xmi:id="_aE7ldHCzEeuEFKGMU-6Pdw" name="ESTADOCIVIL" nullable="false">
+      <containedType xsi:type="SQLDataTypes:CharacterStringDataType" xmi:id="_aE7ldXCzEeuEFKGMU-6Pdw" name="CHAR"/>
+    </columns>
+    <columns xmi:id="_aE7ldnCzEeuEFKGMU-6Pdw" name="SEXO" nullable="false">
+      <containedType xsi:type="SQLDataTypes:CharacterStringDataType" xmi:id="_aE7ld3CzEeuEFKGMU-6Pdw" name="CHAR"/>
+    </columns>
+    <columns xmi:id="_aE7leHCzEeuEFKGMU-6Pdw" name="EMAIL" nullable="false">
+      <containedType xsi:type="SQLDataTypes:CharacterStringDataType" xmi:id="_aE7leXCzEeuEFKGMU-6Pdw" name="VARCHAR2" primitiveType="CHARACTER_VARYING" length="50"/>
+    </columns>
+  </OracleModel:OracleTable>
+</xmi:XMI>
