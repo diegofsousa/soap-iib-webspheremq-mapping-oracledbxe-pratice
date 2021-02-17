@@ -14,13 +14,13 @@ alter session set "_ORACLE_SCRIPT"=true;
 CREATE USER usuario
 IDENTIFIED BY senha;
   
-GRANT create session TO middleware4you;
-GRANT create table TO middleware4you;
-GRANT create view TO middleware4you;
-GRANT create any trigger TO middleware4you;
-GRANT create any procedure TO middleware4you;
-GRANT create sequence TO middleware4you;
-GRANT create synonym TO middleware4you;
+GRANT create session TO usuario;
+GRANT create table TO usuario;
+GRANT create view TO usuario;
+GRANT create any trigger TO usuario;
+GRANT create any procedure TO usuario;
+GRANT create sequence TO usuario;
+GRANT create synonym TO usuario;
 
 ALTER USER usuario quota unlimited on SYSTEM;
 ALTER USER usuario quota unlimited on USERS;
