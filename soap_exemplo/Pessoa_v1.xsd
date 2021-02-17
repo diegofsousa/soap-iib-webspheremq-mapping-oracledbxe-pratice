@@ -24,7 +24,7 @@
 	<xsd:element name="ConsultaPessoaRequisicao">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element maxOccurs="1" minOccurs="1" name="nomePessoa" type="xsd:string">
+				<xsd:element maxOccurs="1" minOccurs="1" name="pesquisaPessoa" type="tns:PessoaFisicaConsulta">
 					<xsd:annotation>
 						<xsd:documentation>Sistema que esta efetuando a requisicao</xsd:documentation>
 					</xsd:annotation>
@@ -32,6 +32,19 @@
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
+	
+	  <xsd:complexType name="PessoaFisicaConsulta">
+	    <xsd:annotation>
+	      <xsd:documentation>Entidade que representa uma pessoa física com seus atributos específicos</xsd:documentation>
+	    </xsd:annotation>
+	    <xsd:sequence>
+	      <xsd:element minOccurs="0" name="email" type="xsd:string">
+	        <xsd:annotation>
+	          <xsd:documentation>E-mail para pesquisa</xsd:documentation>
+	        </xsd:annotation>
+	      </xsd:element>
+	    </xsd:sequence>
+	  </xsd:complexType>
 	
 	<xsd:element name="ConsultaPessoaResposta">
 		<xsd:complexType>
