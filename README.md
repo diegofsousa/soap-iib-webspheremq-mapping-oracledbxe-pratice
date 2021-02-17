@@ -9,7 +9,7 @@ Oracle XE é um sistema de banco de dados gratuito para desenvolvimento, distrib
 Depois de instalado, deve-se criar um usuário:
 
 ```sql
---alter session set "_ORACLE_SCRIPT"=true;
+alter session set "_ORACLE_SCRIPT"=true;
 
 CREATE USER usuario
 IDENTIFIED BY senha;
@@ -48,10 +48,10 @@ mqsistart <Nome do Nó>
 
 Substituir:
 
-- <Nome do Nó>
-- <Caminho do driver ODBC fornecido pelo Oracle XE>
-- <Usuário do banco>
-- <Senha do usuário>
+- Nome do Nó
+- Usuário do banco
+- Senha do usuário
+- Caminho do driver ODBC fornecido pelo Oracle XE
 
 ## Exemplo de tabela usada no laboratório
 
